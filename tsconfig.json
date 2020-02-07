@@ -9,7 +9,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@app/*": ["src/modules/app/*"],
+      "@transaction/*": ["src/modules/transaction/*"],
+      "@payable/*": ["src/modules/payable/*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
