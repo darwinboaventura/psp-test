@@ -6,6 +6,9 @@ import { PayableModule } from '@payable/payable.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
+      type: 'mysql',
+      entities: ['../../**/*.entity{.ts,.js}'],
+      synchronize: true,
       host: process.env.MYSQL_URL,
       port: Number(process.env.MYSQL_PORT),
       username: process.env.MYSQL_USER,

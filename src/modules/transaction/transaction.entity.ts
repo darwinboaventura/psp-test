@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity('transaction')
-export class Transaction {
+export class Transaction extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -53,15 +53,6 @@ export class Transaction {
   })
   createdAt: string;
 
-  @Column({
-    type: 'timestamp',
-    precision: 3,
-    nullable: true,
-    default: () => 'CURRENT_TIMESTAMP(3)',
-    onUpdate: 'CURRENT_TIMESTAMP(3)',
-  })
-  updatedAt: string;
-  
   @Column({
     type: 'timestamp',
     precision: 3,

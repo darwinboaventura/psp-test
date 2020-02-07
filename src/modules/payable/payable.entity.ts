@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, BaseEntity } from 'typeorm';
 import { Transaction } from '@transaction/transaction.entity';
 
 @Entity('payable') 
-export class Payable {
+export class Payable extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -24,4 +24,29 @@ export class Payable {
     nullable: false,
   })
   expectedPaymentDate: string;
+
+  @Column({
+    type: 'timestamp',
+    default: new Date(),
+    update: false,
+    nullable: false,
+  })
+  createdAt: string;
+
+  @Column({
+    type: 'timestamp',
+    precision: 3,
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(3)',
+    onUpdate: 'CURRENT_TIMESTAMP(3)',
+  })
+  updatedAt: string;
+  
+  @Column({
+    type: 'timestamp',
+    precision: 3,
+    nullable: true,
+    insert: false,
+  })
+  deleteAt: string;
 }
