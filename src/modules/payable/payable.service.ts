@@ -20,6 +20,10 @@ export class PayableService {
     });
   }
 
+  async findPayables() {
+    return await Payable.find();
+  }
+
   async createPayable(transaction: CreatePayableRequestDTO) {
     const payable = new Payable();
 
