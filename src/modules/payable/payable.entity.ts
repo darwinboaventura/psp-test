@@ -11,6 +11,18 @@ export class Payable extends BaseEntity {
   @OneToOne(type => Transaction)
   @JoinColumn({ name: 'transactionId' })
   transaction: Transaction;
+
+  @Column({
+    type: 'decimal',
+    nullable: false
+  })
+  transactionValue: number;
+  
+  @Column({
+    type: 'decimal',
+    nullable: false
+  })
+  paidValue: number;
   
   @Column({
     type: 'varchar',
@@ -23,7 +35,7 @@ export class Payable extends BaseEntity {
     type: 'timestamp',
     nullable: false,
   })
-  expectedPaymentDate: string;
+  expectedPaymentDate: string; 
 
   @Column({
     type: 'timestamp',

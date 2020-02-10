@@ -20,6 +20,11 @@ export class Transaction extends BaseEntity {
   paymentMethod: string;
 
   @Column({
+    type: 'decimal'
+  })
+  value: number;
+
+  @Column({
     type: 'varchar',
     length: 4,
     nullable: false,
@@ -34,7 +39,7 @@ export class Transaction extends BaseEntity {
 
   @Column({
     type: 'varchar',
-    length: 5,
+    length: 7,
     nullable: false,
   })
   cardExpirationDate: string;

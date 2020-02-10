@@ -1,6 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ListTransactionsRequestDTO } from './utils/DTOs/request/listTransactionsRequest.dto';
+import { Controller, Get, Query, Post, Body } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
+import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils/DTOs/request';
 
 @Controller('transaction')
 export class TransactionController {
@@ -19,5 +19,10 @@ export class TransactionController {
     delete qs.offset;
 
     return await this.service.findTransactions(qs, options);
+  }
+
+  @Post()
+  async createTransaction(@Body() payload: CreateTransactionRequestDTO) {
+    return await this.service.createTransaction(payload);
   }
 }

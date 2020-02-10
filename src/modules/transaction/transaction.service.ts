@@ -1,16 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { Transaction } from '@transaction/transaction.entity';
 import { FindManyOptions } from 'typeorm';
-import { ListTransactionsRequestDTO } from './utils/DTOs/request/listTransactionsRequest.dto';
+import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils/DTOs/request';
+import { PayableService } from '@payable/payable.service';
 
 @Injectable()
 export class TransactionService {
-  constructor() {}
+  constructor(private payableService: PayableService) {}
 
   async findTransactions(filters: ListTransactionsRequestDTO, options: FindManyOptions) {
     return await Transaction.find({
       ...options,
       where: filters,
     } as FindManyOptions<Transaction>);
+  }
+
+  async createTransaction(payload: CreateTransactionRequestDTO) {
+    const transaction = Object.assign(new Transaction(), payload);
+    const createdTransaction = await transaction.save();
+    
+    if (createdTransaction) {
+      await this.payableService.createPayable(createdTransaction);
+    }
+
+    return createdTransaction;
   }
 }

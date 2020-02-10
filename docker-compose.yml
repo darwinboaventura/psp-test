@@ -4,7 +4,7 @@ services:
   psp_server:
     container_name: 'psp_server'
     image: node:10-alpine
-    command: npm run start
+    command: npm run start:dev
     working_dir: /usr/local/app/
     depends_on: 
       - psp_database
