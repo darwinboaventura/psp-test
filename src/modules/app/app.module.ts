@@ -2,13 +2,18 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionModule } from '@transaction/transaction.module';
 import { PayableModule } from '@payable/payable.module';
+import { Transaction } from '@transaction/transaction.entity';
+import { Payable } from '@payable/payable.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      entities: ['../../**/*.entity{.ts,.js}'],
-      synchronize: true,
+      entities: [
+        Transaction,
+        Payable,
+      ],
+      synchronize: false,
       host: process.env.MYSQL_URL,
       port: Number(process.env.MYSQL_PORT),
       username: process.env.MYSQL_USER,

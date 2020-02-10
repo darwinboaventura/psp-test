@@ -41,6 +41,7 @@ export class Transaction extends BaseEntity {
 
   @Column({
     type: 'varchar',
+    length: 5,
     nullable: false,
   })
   cardVerificationCode: string;
