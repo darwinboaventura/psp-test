@@ -16,7 +16,10 @@ export class TransactionService {
   }
 
   async createTransaction(payload: CreateTransactionRequestDTO) {
-    const transaction = Object.assign(new Transaction(), payload);
+    const transaction = Object.assign(new Transaction(), payload, {
+      cardNumber: payload.cardNumber.substring(payload.cardNumber.length - 4),
+    });
+
     const createdTransaction = await transaction.save();
 
     if (createdTransaction) {
