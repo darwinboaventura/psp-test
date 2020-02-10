@@ -20,7 +20,11 @@ export class TransactionService {
     const createdTransaction = await transaction.save();
     
     if (createdTransaction) {
-      await this.payableService.createPayable(createdTransaction);
+      const payable = await this.payableService.getPayableByTransactionId(createdTransaction.id);
+      
+      if (!payable) {
+        await this.payableService.createPayable(createdTransaction);
+      }
     }
 
     return createdTransaction;
