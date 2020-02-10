@@ -1,13 +1,20 @@
 import * as _ from 'lodash';
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get } from '@nestjs/common';
 import { PayableService } from '@payable/payable.service';
-import { PayableStatusENUM } from './utils/ENUMs/payableStatus.enum';
+import { PayableStatusENUM } from './utils/ENUMs';
 
 @Controller('payable')
 export class PayableController {
-  constructor(
-    private readonly service: PayableService
-  ) {}
+  constructor(private readonly service: PayableService) {}
+
+  calculateBalance(items) {
+    return Number(
+      _.reduce(
+        _.map(items, (item) => item.paidValue),
+        (sum, n) => Number(sum) + Number(n),
+      ),
+    );
+  }
 
   @Get()
   async listPayables() {
@@ -19,16 +26,16 @@ export class PayableController {
 
       return {
         available: {
-          balance: Number(_.reduce(_.map(available, (item) => item.paidValue), (sum, n) => Number(sum) + Number(n))),
+          balance: this.calculateBalance(available),
           items: available,
         },
         waiting_funds: {
-          balance: Number(_.reduce(_.map(waitingFunds, (item) => item.paidValue), (sum, n) => Number(sum) + Number(n))),
+          balance: this.calculateBalance(waitingFunds),
           items: waitingFunds,
         },
       };
     }
 
-    return {available: [], waiting_funds: []};
+    return { available: [], waiting_funds: [] };
   }
 }

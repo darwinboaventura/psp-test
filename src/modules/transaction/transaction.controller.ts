@@ -4,9 +4,7 @@ import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils
 
 @Controller('transaction')
 export class TransactionController {
-  constructor(
-    private readonly service: TransactionService,
-  ) {}
+  constructor(private readonly service: TransactionService) {}
 
   @Get()
   async listTransactions(@Query() qs: ListTransactionsRequestDTO) {

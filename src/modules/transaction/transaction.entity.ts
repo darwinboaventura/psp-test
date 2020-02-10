@@ -8,7 +8,7 @@ export class Transaction extends BaseEntity {
   id: number;
 
   @Column({
-    type: 'varchar'
+    type: 'varchar',
   })
   description: string;
 
@@ -20,7 +20,7 @@ export class Transaction extends BaseEntity {
   paymentMethod: string;
 
   @Column({
-    type: 'decimal'
+    type: 'decimal',
   })
   value: number;
 
@@ -67,7 +67,7 @@ export class Transaction extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP(3)',
   })
   updatedAt: string;
-  
+
   @Column({
     type: 'timestamp',
     precision: 3,

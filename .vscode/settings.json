@@ -1,0 +1,26 @@
+{
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": true,
+  "files.exclude": {
+    "**/.DS_Store": true,
+    ".git": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "search.exclude": {
+    "**/.vscode": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/lib": true,
+    "**/node_modules": true,
+    "**/package-lock.json": true
+  },
+  "standard.enable": false
+}

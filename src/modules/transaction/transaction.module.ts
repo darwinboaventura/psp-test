@@ -4,11 +4,9 @@ import { TransactionService } from './transaction.service';
 import { PayableModule } from '@payable/payable.module';
 
 @Module({
-  imports: [
-    PayableModule
-  ],
+  imports: [PayableModule],
   exports: [],
   providers: [TransactionService],
-  controllers: [TransactionController]
+  controllers: [TransactionController],
 })
 export class TransactionModule {}

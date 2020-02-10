@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import { PayableService } from './payable.service';
 import { PayableController } from './payable.controller';
 
@@ -6,8 +6,6 @@ import { PayableController } from './payable.controller';
   imports: [],
   exports: [PayableService],
   providers: [PayableService],
-  controllers: [
-    PayableController
-  ]
+  controllers: [PayableController],
 })
 export class PayableModule {}

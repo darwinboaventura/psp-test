@@ -18,10 +18,10 @@ export class TransactionService {
   async createTransaction(payload: CreateTransactionRequestDTO) {
     const transaction = Object.assign(new Transaction(), payload);
     const createdTransaction = await transaction.save();
-    
+
     if (createdTransaction) {
       const payable = await this.payableService.getPayableByTransactionId(createdTransaction.id);
-      
+
       if (!payable) {
         await this.payableService.createPayable(createdTransaction);
       }

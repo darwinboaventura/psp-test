@@ -9,10 +9,7 @@ import { Payable } from '@payable/payable.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      entities: [
-        Transaction,
-        Payable,
-      ],
+      entities: [Transaction, Payable],
       synchronize: false,
       host: process.env.MYSQL_URL,
       port: Number(process.env.MYSQL_PORT),

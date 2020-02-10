@@ -1,29 +1,29 @@
 import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, BaseEntity } from 'typeorm';
 import { Transaction } from '@transaction/transaction.entity';
 
-@Entity('payable') 
+@Entity('payable')
 export class Payable extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
   id: number;
 
-  @OneToOne(type => Transaction)
+  @OneToOne((type) => Transaction)
   @JoinColumn({ name: 'transactionId' })
   transaction: Transaction;
 
   @Column({
     type: 'decimal',
-    nullable: false
+    nullable: false,
   })
   transactionValue: number;
-  
+
   @Column({
     type: 'decimal',
-    nullable: false
+    nullable: false,
   })
   paidValue: number;
-  
+
   @Column({
     type: 'varchar',
     enum: ['paid', 'waiting_funds'],
@@ -35,7 +35,7 @@ export class Payable extends BaseEntity {
     type: 'timestamp',
     nullable: false,
   })
-  expectedPaymentDate: string; 
+  expectedPaymentDate: string;
 
   @Column({
     type: 'timestamp',
@@ -53,7 +53,7 @@ export class Payable extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP(3)',
   })
   updatedAt: string;
-  
+
   @Column({
     type: 'timestamp',
     precision: 3,

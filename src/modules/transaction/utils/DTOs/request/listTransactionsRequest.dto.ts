@@ -1,4 +1,4 @@
-import {IsOptional, IsString, IsEnum, Matches, IsNumber, Min} from 'class-validator';
+import { IsOptional, IsString, IsEnum, Matches, IsNumber, Min } from 'class-validator';
 import { TransactionPaymentMethodENUM } from '../../ENUMs/transactionPaymentMethod.enum';
 
 export class ListTransactionsRequestDTO {
@@ -35,7 +35,7 @@ export class ListTransactionsRequestDTO {
   @IsNumber()
   @Min(1)
   limit?: number;
-  
+
   @IsOptional()
   @IsNumber()
   @Min(1)

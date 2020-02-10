@@ -1,10 +1,9 @@
 import * as moment from 'moment';
-import { Injectable } from "@nestjs/common";
-import { TransactionPaymentMethodENUM } from "@transaction/utils/ENUMs/transactionPaymentMethod.enum";
-import { Payable } from './payable.entity';
-import { PayableStatusENUM } from './utils/ENUMs/payableStatus.enum';
-import { CreatePayableRequestDTO } from './utils/DTOs';
+import { Injectable } from '@nestjs/common';
 import { Transaction } from '@transaction/transaction.entity';
+import { TransactionPaymentMethodENUM } from '@transaction/utils';
+import { Payable } from './payable.entity';
+import { CreatePayableRequestDTO, PayableStatusENUM } from './utils';
 
 @Injectable()
 export class PayableService {
@@ -15,8 +14,8 @@ export class PayableService {
       where: {
         transaction: {
           id: transactionId,
-        }
-      }
+        },
+      },
     });
   }
 
@@ -34,15 +33,17 @@ export class PayableService {
       case TransactionPaymentMethodENUM.debit_card:
         payable.status = PayableStatusENUM.paid;
         payable.expectedPaymentDate = moment().format('YYYY-MM-DD HH:MM:ss');
-        payable.paidValue = transaction.value - ((3 / transaction.value) * 100);
+        payable.paidValue = transaction.value - (3 / transaction.value) * 100;
 
         return await payable.save();
       case TransactionPaymentMethodENUM.credit_card:
-          payable.status = PayableStatusENUM.waiting_funds;
-          payable.expectedPaymentDate = moment().add(30, 'days').format('YYYY-MM-DD HH:MM:ss');
-          payable.paidValue = transaction.value - ((5 / transaction.value) * 100);
-  
-          return await payable.save();
+        payable.status = PayableStatusENUM.waiting_funds;
+        payable.expectedPaymentDate = moment()
+          .add(30, 'days')
+          .format('YYYY-MM-DD HH:MM:ss');
+        payable.paidValue = transaction.value - (5 / transaction.value) * 100;
+
+        return await payable.save();
       default:
         throw new Error('Payment method not mapped!');
     }
