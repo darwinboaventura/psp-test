@@ -1,19 +1,26 @@
 import * as _ from 'lodash';
 import { Controller, Get } from '@nestjs/common';
-import { PayableService } from '@payable/payable.service';
 import { PayableStatusENUM } from './utils/ENUMs';
+import { PayableService } from './payable.service';
 
 @Controller('payable')
 export class PayableController {
   constructor(private readonly service: PayableService) {}
 
   calculateBalance(items) {
-    return Number(
-      _.reduce(
-        _.map(items, (item) => item.paidValue),
-        (sum, n) => Number(sum) + Number(n),
-      ),
-    );
+    let sum = 0;
+
+    if (items) {
+      sum =
+        Number(
+          _.reduce(
+            _.map(items, (item) => item.paidValue),
+            (sum, n) => Number(sum) + Number(n),
+          ),
+        ) || 0;
+    }
+
+    return sum;
   }
 
   @Get()

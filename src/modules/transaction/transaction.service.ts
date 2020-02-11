@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Transaction } from '@transaction/transaction.entity';
 import { FindManyOptions } from 'typeorm';
 import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils/DTOs/request';
-import { PayableService } from '@payable/payable.service';
+import { PayableService } from '../payable/payable.service';
+import { Transaction } from './transaction.entity';
 
 @Injectable()
 export class TransactionService {

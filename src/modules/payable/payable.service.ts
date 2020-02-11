@@ -1,9 +1,9 @@
 import * as moment from 'moment';
 import { Injectable } from '@nestjs/common';
-import { Transaction } from '@transaction/transaction.entity';
-import { TransactionPaymentMethodENUM } from '@transaction/utils';
 import { Payable } from './payable.entity';
 import { CreatePayableRequestDTO, PayableStatusENUM } from './utils';
+import { TransactionPaymentMethodENUM } from '../transaction/utils';
+import { Transaction } from '../transaction/transaction.entity';
 
 @Injectable()
 export class PayableService {

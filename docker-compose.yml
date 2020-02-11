@@ -6,39 +6,75 @@ services:
     image: node:10-alpine
     command: npm run start:dev
     working_dir: /usr/local/app/
-    depends_on: 
+    depends_on:
       - psp_database
-    volumes: 
+    volumes:
       - './:/usr/local/app'
-    ports: 
+    ports:
       - '9020:9020'
-    networks: 
+    networks:
       - pagarme
-    environment: 
+    environment:
       - MYSQL_URL=psp_database
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=psp
 
+  psp_server_test:
+    image: node:10-alpine
+    command: npm run test:watch
+    working_dir: /usr/local/app/
+    restart: on-failure
+    container_name: psp_server_test
+    environment:
+      - MYSQL_URL=psp_database_test
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=psp
+    volumes:
+      - './:/usr/local/app/'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - psp_database_test
+    networks:
+      - pagarme
+
   psp_database:
     container_name: 'psp_database'
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password
-    ports: 
+    ports:
       - '9021:3306'
-    volumes: 
+    volumes:
       - 'psp_mysql_data:/var/lib/mysql'
       - ./database:/docker-entrypoint-initdb.d
-    networks: 
+    networks:
       - pagarme
-    environment: 
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  psp_database_test:
+    container_name: 'psp_database_test'
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3307:3306'
+    volumes:
+      - 'psp_mysql_test_data:/var/lib/mysql'
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - pagarme
+    environment:
       - MYSQL_ROOT_PASSWORD=root
 
 volumes:
   psp_mysql_data:
+  psp_mysql_test_data:
 
-networks: 
+networks:
   pagarme:
     external:
       name: pagarme
