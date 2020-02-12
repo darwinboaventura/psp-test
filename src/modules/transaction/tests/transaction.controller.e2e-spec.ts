@@ -58,8 +58,8 @@ describe('TransactionController :: E2E', () => {
       response = await request(app.getHttpServer()).get(`/transaction`);
 
       expect(response.status).toBe(200);
-      expect(JSON.parse(response.text).length).toBe(1);
-      expect(JSON.parse(response.text)[0]).toMatchObject(
+      expect(response.body.length).toBe(1);
+      expect(response.body[0]).toMatchObject(
         Object.assign({}, data, {
           cardNumber: '4933',
         }),
@@ -79,8 +79,8 @@ describe('TransactionController :: E2E', () => {
       response = await request(app.getHttpServer()).get(`/transaction`);
 
       expect(response.status).toBe(200);
-      expect(JSON.parse(response.text).length).toBe(2);
-      expect(JSON.parse(response.text)[1]).toMatchObject(
+      expect(response.body.length).toBe(2);
+      expect(response.body[1]).toMatchObject(
         Object.assign({}, data, {
           paymentMethod: TransactionPaymentMethodENUM.debit_card,
           description: 'iPhone 8 256GB',
