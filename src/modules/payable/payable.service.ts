@@ -19,8 +19,10 @@ export class PayableService {
     });
   }
 
-  async findPayables() {
-    return await Payable.find();
+  async findPayables(filters?: Payable) {
+    return await Payable.find({
+      where: filters,
+    });
   }
 
   async createPayable(transaction: CreatePayableRequestDTO) {

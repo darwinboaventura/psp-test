@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Transform } from 'class-transformer';
 
 @Entity('transaction')
 export class Transaction extends BaseEntity {
@@ -22,6 +23,7 @@ export class Transaction extends BaseEntity {
   @Column({
     type: 'decimal',
   })
+  @Transform((value) => parseFloat(value))
   value: number;
 
   @Column({

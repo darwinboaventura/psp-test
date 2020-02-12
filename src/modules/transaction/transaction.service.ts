@@ -3,6 +3,7 @@ import { FindManyOptions } from 'typeorm';
 import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils/DTOs/request';
 import { PayableService } from '../payable/payable.service';
 import { Transaction } from './transaction.entity';
+import { classToPlain } from 'class-transformer';
 
 @Injectable()
 export class TransactionService {
@@ -30,6 +31,6 @@ export class TransactionService {
       }
     }
 
-    return createdTransaction;
+    return classToPlain(createdTransaction);
   }
 }

@@ -1,7 +1,11 @@
 import * as _ from 'lodash';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { PayableStatusENUM } from './utils/ENUMs';
 import { PayableService } from './payable.service';
+import { GetPayableByTransactionIdRequestDTO } from './utils/DTOs/request/getPayableByTransactionIdRequest.dto';
+import { Transaction } from '../transaction/transaction.entity';
+import { Payable } from './payable.entity';
+import { classToPlain } from 'class-transformer';
 
 @Controller('payable')
 export class PayableController {
@@ -44,5 +48,21 @@ export class PayableController {
     }
 
     return { available: [], waiting_funds: [] };
+  }
+
+  @Get('/:transactionId')
+  async getPayableByTransactionId(@Param() params: GetPayableByTransactionIdRequestDTO) {
+    const payable = new Payable();
+    payable.transaction = {
+      id: params.transactionId,
+    } as Transaction;
+
+    const payables = await this.service.findPayables(payable);
+
+    if (payables) {
+      return classToPlain(payables[0]);
+    }
+
+    return undefined;
   }
 }

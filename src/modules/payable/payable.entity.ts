@@ -1,5 +1,7 @@
+import { Transform } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, BaseEntity } from 'typeorm';
 import { Transaction } from '../transaction/transaction.entity';
+import * as moment from 'moment';
 
 @Entity('payable')
 export class Payable extends BaseEntity {
@@ -16,12 +18,14 @@ export class Payable extends BaseEntity {
     type: 'decimal',
     nullable: false,
   })
+  @Transform((value) => parseFloat(value))
   transactionValue: number;
 
   @Column({
     type: 'decimal',
     nullable: false,
   })
+  @Transform((value) => parseFloat(value))
   paidValue: number;
 
   @Column({
@@ -35,6 +39,7 @@ export class Payable extends BaseEntity {
     type: 'timestamp',
     nullable: false,
   })
+  @Transform((value) => moment(value).format('YYYY-MM-DD'))
   expectedPaymentDate: string;
 
   @Column({
