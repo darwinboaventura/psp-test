@@ -155,13 +155,6 @@ describe('TransactionController :: E2E', () => {
     });
   });
 
-  it('/GET transaction', () => {
-    return request(app.getHttpServer())
-      .get('/transaction')
-      .expect(200)
-      .expect([]);
-  });
-
   afterAll(async () => {
     await app.close();
   });
