@@ -30,6 +30,66 @@ describe('TransactionController :: E2E', () => {
     await database.cleanDatabase();
   });
 
+  describe('When make a request to /GET transaction', () => {
+    it('should return array of transactions', async () => {
+      let response;
+
+      request(app.getHttpServer())
+        .get(`/transaction`)
+        .expect(200)
+        .expect([]);
+
+      const data = {
+        description: 'iPhone X 128GB',
+        paymentMethod: TransactionPaymentMethodENUM.credit_card,
+        value: 2500,
+        cardNumber: '5177 6061 6786 4933',
+        cardHolderName: 'Darwin Boaventura',
+        cardExpirationDate: '11/2021',
+        cardVerificationCode: '555',
+      };
+
+      await request(app.getHttpServer())
+        .post('/transaction')
+        .type('form')
+        .send(data)
+        .expect(201);
+
+      response = await request(app.getHttpServer()).get(`/transaction`);
+
+      expect(response.status).toBe(200);
+      expect(JSON.parse(response.text).length).toBe(1);
+      expect(JSON.parse(response.text)[0]).toMatchObject(
+        Object.assign({}, data, {
+          cardNumber: '4933',
+        }),
+      );
+
+      await request(app.getHttpServer())
+        .post('/transaction')
+        .type('form')
+        .send(
+          Object.assign({}, data, {
+            paymentMethod: TransactionPaymentMethodENUM.debit_card,
+            description: 'iPhone 8 256GB',
+          }),
+        )
+        .expect(201);
+
+      response = await request(app.getHttpServer()).get(`/transaction`);
+
+      expect(response.status).toBe(200);
+      expect(JSON.parse(response.text).length).toBe(2);
+      expect(JSON.parse(response.text)[1]).toMatchObject(
+        Object.assign({}, data, {
+          paymentMethod: TransactionPaymentMethodENUM.debit_card,
+          description: 'iPhone 8 256GB',
+          cardNumber: '4933',
+        }),
+      );
+    });
+  });
+
   describe('When make a request to /POST transaction', () => {
     describe('Passing a valid payload', () => {
       it('should create a transaction and return it', async () => {
@@ -77,6 +137,20 @@ describe('TransactionController :: E2E', () => {
         expect(createdPayable.paidValue).toBe(data.payable.paidValue);
         expect(createdPayable.status).toBe(PayableStatusENUM.waiting_funds);
         expect(createdPayable.expectedPaymentDate).toBe(data.payable.expectedPaymentDate);
+      });
+    });
+
+    describe('Passing an invalid payload', () => {
+      it('should throw a validation error', async () => {
+        const data = {
+          description: 'Example wrong payload',
+        };
+
+        request(app.getHttpServer())
+          .post('/transaction')
+          .type('form')
+          .send(data)
+          .expect(500);
       });
     });
   });

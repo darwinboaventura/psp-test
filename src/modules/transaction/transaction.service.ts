@@ -10,10 +10,12 @@ export class TransactionService {
   constructor(private payableService: PayableService) {}
 
   async findTransactions(filters: ListTransactionsRequestDTO, options: FindManyOptions) {
-    return await Transaction.find({
+    const transaction = await Transaction.find({
       ...options,
       where: filters,
     } as FindManyOptions<Transaction>);
+
+    return classToPlain(transaction);
   }
 
   async createTransaction(payload: CreateTransactionRequestDTO) {
