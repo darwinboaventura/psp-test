@@ -23,7 +23,7 @@ services:
 
   psp_server_test:
     image: node:10-alpine
-    command: npm run test:watch
+    command: npm run test
     working_dir: /usr/local/app/
     restart: on-failure
     container_name: psp_server_test
