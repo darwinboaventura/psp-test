@@ -1,28 +1,36 @@
 import * as moment from 'moment';
 import { Injectable } from '@nestjs/common';
 import { Payable } from './payable.entity';
-import { CreatePayableRequestDTO, PayableStatusENUM } from './utils';
+import { CreatePayableRequestDTO, PayableStatusENUM, subtractFeeFromValue } from './utils';
 import { TransactionPaymentMethodENUM } from '../transaction/utils';
 import { Transaction } from '../transaction/transaction.entity';
+import { classToPlain } from 'class-transformer';
+import { calculateExpectedPaymentDate } from './utils/payable.util';
 
 @Injectable()
 export class PayableService {
   constructor() {}
 
   async getPayableByTransactionId(transactionId: number) {
-    return await Payable.findOne({
-      where: {
-        transaction: {
-          id: transactionId,
+    return classToPlain(
+      await Payable.findOne({
+        where: {
+          transaction: {
+            id: transactionId,
+          },
         },
-      },
-    });
+        relations: ['transaction'],
+      }),
+    );
   }
 
   async findPayables(filters?: Payable) {
-    return await Payable.find({
-      where: filters,
-    });
+    return classToPlain(
+      await Payable.find({
+        where: filters,
+        relations: ['transaction'],
+      }),
+    );
   }
 
   async createPayable(transaction: CreatePayableRequestDTO) {
@@ -34,18 +42,16 @@ export class PayableService {
     switch (transaction.paymentMethod) {
       case TransactionPaymentMethodENUM.debit_card:
         payable.status = PayableStatusENUM.paid;
-        payable.expectedPaymentDate = moment().format('YYYY-MM-DD HH:MM:ss');
-        payable.paidValue = transaction.value - (3 / transaction.value) * 100;
+        payable.expectedPaymentDate = calculateExpectedPaymentDate(TransactionPaymentMethodENUM.debit_card);
+        payable.paidValue = subtractFeeFromValue(transaction.value, 3);
 
-        return await payable.save();
+        return classToPlain(await payable.save());
       case TransactionPaymentMethodENUM.credit_card:
         payable.status = PayableStatusENUM.waiting_funds;
-        payable.expectedPaymentDate = moment()
-          .add(30, 'days')
-          .format('YYYY-MM-DD HH:MM:ss');
-        payable.paidValue = transaction.value - (5 / transaction.value) * 100;
+        payable.expectedPaymentDate = calculateExpectedPaymentDate(TransactionPaymentMethodENUM.credit_card);
+        payable.paidValue = subtractFeeFromValue(transaction.value, 5);
 
-        return await payable.save();
+        return classToPlain(await payable.save());
       default:
         throw new Error('Payment method not mapped!');
     }

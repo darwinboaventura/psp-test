@@ -15,13 +15,8 @@ export class PayableController {
     let sum = 0;
 
     if (items) {
-      sum =
-        Number(
-          _.reduce(
-            _.map(items, (item) => item.paidValue),
-            (sum, n) => Number(sum) + Number(n),
-          ),
-        ) || 0;
+      items = _.map(items, (item) => item.paidValue);
+      sum = _.reduce(items, (value, n) => value + n) || 0;
     }
 
     return sum;
