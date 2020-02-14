@@ -1,11 +1,12 @@
 import * as moment from 'moment';
 import { Injectable } from '@nestjs/common';
 import { Payable } from './payable.entity';
-import { CreatePayableRequestDTO, PayableStatusENUM, subtractFeeFromValue } from './utils';
-import { TransactionPaymentMethodENUM } from '../transaction/utils';
 import { Transaction } from '../transaction/transaction.entity';
 import { classToPlain } from 'class-transformer';
-import { calculateExpectedPaymentDate } from './utils/payable.util';
+import { calculateExpectedPaymentDate, subtractFeeFromValue } from './utils/payable.util';
+import { TransactionPaymentMethodENUM } from '../transaction/enum/transactionPaymentMethod.enum';
+import { CreatePayableRequestDTO } from './dto/request/createPayableRequest.dto';
+import { PayableStatusENUM } from './enum/payableStatus.enum';
 
 @Injectable()
 export class PayableService {

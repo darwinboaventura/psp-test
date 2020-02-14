@@ -1,4 +1,4 @@
-import { TransactionPaymentMethodENUM } from '../../transaction/utils/ENUMs/transactionPaymentMethod.enum';
+import { TransactionPaymentMethodENUM } from '../../transaction/enum/transactionPaymentMethod.enum';
 import * as moment from 'moment';
 
 export const subtractFeeFromValue = (value: number, fee: number) => {

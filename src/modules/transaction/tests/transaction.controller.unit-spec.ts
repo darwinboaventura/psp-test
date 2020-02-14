@@ -1,9 +1,9 @@
 import { TransactionService } from '../transaction.service';
 import { TransactionController } from '../transaction.controller';
 import { PayableService } from '../../payable/payable.service';
-import { TransactionPaymentMethodENUM } from '../utils/ENUMs/transactionPaymentMethod.enum';
+import { TransactionPaymentMethodENUM } from '../enum/transactionPaymentMethod.enum';
 
-describe('TransactionController', () => {
+describe('TransactionController :: Unitary', () => {
   let payableService: PayableService;
   let transactionController: TransactionController;
   let transactionService: TransactionService;

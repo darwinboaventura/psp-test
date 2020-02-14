@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 
-export class TestDatabaseUtil {
+export class TestUtil {
   connection: Connection;
 
   constructor(connection: Connection) {
@@ -8,7 +8,9 @@ export class TestDatabaseUtil {
   }
 
   async cleanDatabase() {
-    await this.connection.query('DELETE FROM transaction');
-    await this.connection.query('DELETE FROM payable');
+    return await Promise.all([
+      this.connection.query('DELETE FROM transaction'),
+      this.connection.query('DELETE FROM payable'),
+    ]);
   }
 }

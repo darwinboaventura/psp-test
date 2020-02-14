@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FindManyOptions } from 'typeorm';
-import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './utils/DTOs/request';
+import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './dto/request';
 import { PayableService } from '../payable/payable.service';
 import { Transaction } from './transaction.entity';
 import { classToPlain } from 'class-transformer';

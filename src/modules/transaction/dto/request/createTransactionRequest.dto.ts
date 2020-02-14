@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsEnum, MaxLength, Matches, IsNumber, Min, MinLength } from 'class-validator';
-import { TransactionPaymentMethodENUM } from '../../ENUMs/transactionPaymentMethod.enum';
+import { TransactionPaymentMethodENUM } from '../../enum/transactionPaymentMethod.enum';
 
 export class CreateTransactionRequestDTO {
   @IsNotEmpty()

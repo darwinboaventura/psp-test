@@ -4,22 +4,22 @@ import * as request from 'supertest';
 import * as moment from 'moment';
 import { AppModule } from '../../app/app.module';
 import { Connection } from 'typeorm';
-import { TestDatabaseUtil } from '../../app/utils/test/testDatabase.util';
-import { TransactionPaymentMethodENUM } from '../utils/ENUMs/transactionPaymentMethod.enum';
+import { TestUtil } from '../../app/utils/test.util';
+import { TransactionPaymentMethodENUM } from '../enum/transactionPaymentMethod.enum';
 import { Transaction } from '../transaction.entity';
-import { PayableStatusENUM } from '../../payable/utils/ENUMs/payableStatus.enum';
+import { PayableStatusENUM } from '../../payable/enum/payableStatus.enum';
 import { Payable } from '../../payable/payable.entity';
 
 describe('TransactionController :: E2E', () => {
   let app: INestApplication;
-  let database: TestDatabaseUtil;
+  let database: TestUtil;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
-    database = new TestDatabaseUtil(moduleRef.get<Connection>(Connection));
+    database = new TestUtil(moduleRef.get<Connection>(Connection));
 
     app = moduleRef.createNestApplication();
 

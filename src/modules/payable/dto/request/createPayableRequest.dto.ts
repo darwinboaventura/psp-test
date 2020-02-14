@@ -1,5 +1,5 @@
 import { Allow } from 'class-validator';
-import { CreateTransactionRequestDTO } from '../../../../transaction/utils/DTOs/request/createTransactionRequest.dto';
+import { CreateTransactionRequestDTO } from '../../../transaction/dto/request/createTransactionRequest.dto';
 
 export class CreatePayableRequestDTO extends CreateTransactionRequestDTO {
   @Allow()

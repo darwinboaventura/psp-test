@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import { Controller, Get, Param } from '@nestjs/common';
-import { PayableStatusENUM } from './utils/ENUMs';
+import { PayableStatusENUM } from './enum';
 import { PayableService } from './payable.service';
-import { GetPayableByTransactionIdRequestDTO } from './utils/DTOs/request/getPayableByTransactionIdRequest.dto';
+import { GetPayableByTransactionIdRequestDTO } from './dto/request/getPayableByTransactionIdRequest.dto';
 import { Transaction } from '../transaction/transaction.entity';
 import { Payable } from './payable.entity';
 import { classToPlain } from 'class-transformer';

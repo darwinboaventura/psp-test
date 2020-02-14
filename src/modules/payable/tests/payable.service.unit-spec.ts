@@ -1,7 +1,8 @@
 import { PayableService } from '../payable.service';
-import { PayableStatusENUM } from '../utils/ENUMs/payableStatus.enum';
-import { TransactionPaymentMethodENUM } from '../../transaction/utils/ENUMs/transactionPaymentMethod.enum';
-describe('PayableService', () => {
+import { PayableStatusENUM } from '../enum/payableStatus.enum';
+import { TransactionPaymentMethodENUM } from '../../transaction/enum/transactionPaymentMethod.enum';
+
+describe('PayableService :: Unitary', () => {
   let payableService: PayableService;
 
   beforeEach(() => {

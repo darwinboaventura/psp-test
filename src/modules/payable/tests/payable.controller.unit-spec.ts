@@ -1,7 +1,7 @@
 import { PayableController } from '../payable.controller';
 import { PayableService } from '../payable.service';
 
-describe('PayableController', () => {
+describe('PayableController :: Unitary', () => {
   let payableController: PayableController;
   let payableService: PayableService;
 
