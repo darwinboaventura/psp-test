@@ -13,4 +13,8 @@ export class TestUtil {
       this.connection.query('DELETE FROM payable'),
     ]);
   }
+
+  async closeConnection() {
+    return await this.connection.close();
+  }
 }

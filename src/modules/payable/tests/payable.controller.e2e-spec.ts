@@ -24,7 +24,6 @@ describe('PayableController :: E2E', () => {
     app = moduleRef.createNestApplication();
 
     await app.init();
-    await database.cleanDatabase();
   });
 
   beforeEach(async () => {
@@ -147,5 +146,11 @@ describe('PayableController :: E2E', () => {
         expect(createdPayable.expectedPaymentDate).toBe(data.payable.expectedPaymentDate);
       });
     });
+  });
+
+  afterAll(async () => {
+    await database.cleanDatabase();
+    await database.closeConnection();
+    await app.close();
   });
 });

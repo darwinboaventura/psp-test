@@ -1,6 +1,5 @@
 import { PayableController } from '../payable.controller';
 import { PayableService } from '../payable.service';
-import { calculateBalance } from '../utils/payable.util';
 
 describe('PayableController :: Unitary', () => {
   let payableController: PayableController;
@@ -9,31 +8,6 @@ describe('PayableController :: Unitary', () => {
   beforeEach(() => {
     payableService = new PayableService();
     payableController = new PayableController(payableService);
-  });
-
-  describe('calculateBalance', () => {
-    describe('when passing an array of items', () => {
-      it('should calculate the sum of all items value', () => {
-        const inputData = [
-          {
-            paidValue: 100,
-          },
-          {
-            paidValue: 120,
-          },
-        ];
-
-        expect(calculateBalance(inputData)).toBe(220);
-      });
-    });
-
-    describe('when passing an empty array', () => {
-      it('should return zero', () => {
-        const inputData = [];
-
-        expect(calculateBalance(inputData)).toBe(0);
-      });
-    });
   });
 
   describe('listPayables', () => {

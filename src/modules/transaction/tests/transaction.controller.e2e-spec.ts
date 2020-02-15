@@ -24,7 +24,6 @@ describe('TransactionController :: E2E', () => {
     app = moduleRef.createNestApplication();
 
     await app.init();
-    await database.cleanDatabase();
   });
 
   beforeEach(async () => {
@@ -157,6 +156,9 @@ describe('TransactionController :: E2E', () => {
   });
 
   afterAll(async () => {
+    await database.cleanDatabase();
+    await database.closeConnection();
+
     await app.close();
   });
 });
