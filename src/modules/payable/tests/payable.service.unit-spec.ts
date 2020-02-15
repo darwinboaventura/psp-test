@@ -79,7 +79,7 @@ describe('PayableService :: Unitary', () => {
         description: 'Descrição',
         paymentMethod: TransactionPaymentMethodENUM.credit_card,
         value: 100,
-        cardNumber: '123456789',
+        cardNumber: '5562 9445 8620 0675',
         cardHolderName: 'Darwin B',
         cardExpirationDate: '02/2025',
         cardVerificationCode: '555',

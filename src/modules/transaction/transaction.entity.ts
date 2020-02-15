@@ -33,6 +33,7 @@ export class Transaction extends BaseEntity {
     length: 4,
     nullable: false,
   })
+  @Transform((value) => value.split(' ').join(''))
   cardNumber: string;
 
   @Column({

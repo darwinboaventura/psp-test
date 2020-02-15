@@ -3,7 +3,7 @@ import { FindManyOptions } from 'typeorm';
 import { CreateTransactionRequestDTO, ListTransactionsRequestDTO } from './dto/request';
 import { PayableService } from '../payable/payable.service';
 import { Transaction } from './transaction.entity';
-import { classToPlain } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 
 @Injectable()
 export class TransactionService {
@@ -19,7 +19,7 @@ export class TransactionService {
   }
 
   async createTransaction(payload: CreateTransactionRequestDTO) {
-    const transaction = Object.assign(new Transaction(), payload, {
+    const transaction = Object.assign(new Transaction(), plainToClass(Transaction, payload), {
       cardNumber: payload.cardNumber.substring(payload.cardNumber.length - 4),
     });
 

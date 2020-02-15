@@ -43,7 +43,7 @@ describe('TransactionController :: E2E', () => {
         description: 'iPhone X 128GB',
         paymentMethod: TransactionPaymentMethodENUM.credit_card,
         value: 2500,
-        cardNumber: '5177 6061 6786 4933',
+        cardNumber: '5562 9445 8620 0675',
         cardHolderName: 'Darwin Boaventura',
         cardExpirationDate: '11/2021',
         cardVerificationCode: '555',
@@ -61,7 +61,7 @@ describe('TransactionController :: E2E', () => {
       expect(response.body.length).toBe(1);
       expect(response.body[0]).toMatchObject(
         Object.assign({}, data, {
-          cardNumber: '4933',
+          cardNumber: '0675',
         }),
       );
 
@@ -84,7 +84,7 @@ describe('TransactionController :: E2E', () => {
         Object.assign({}, data, {
           paymentMethod: TransactionPaymentMethodENUM.debit_card,
           description: 'iPhone 8 256GB',
-          cardNumber: '4933',
+          cardNumber: '0675',
         }),
       );
     });
@@ -98,7 +98,7 @@ describe('TransactionController :: E2E', () => {
             description: 'iPhone X 128GB',
             paymentMethod: TransactionPaymentMethodENUM.credit_card,
             value: 2500,
-            cardNumber: '5177 6061 6786 4933',
+            cardNumber: '5562 9445 8620 0675',
             cardHolderName: 'Darwin Boaventura',
             cardExpirationDate: '11/2021',
             cardVerificationCode: '555',
@@ -116,7 +116,7 @@ describe('TransactionController :: E2E', () => {
         expect(createTransactionResponse.status).toBe(201);
         expect(createdTransaction).toMatchObject(
           Object.assign({}, data.transaction, {
-            cardNumber: '4933',
+            cardNumber: '0675',
           }),
         );
 

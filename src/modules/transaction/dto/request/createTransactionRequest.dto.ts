@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum, Matches, IsNumber, Min, MinLength } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, Matches, IsNumber, Min, IsCreditCard, Length } from 'class-validator';
 import { TransactionPaymentMethodENUM } from '../../enum/transactionPaymentMethod.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -18,8 +18,7 @@ export class CreateTransactionRequestDTO {
   value: number;
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(4)
+  @IsCreditCard()
   cardNumber: string;
 
   @IsNotEmpty()
@@ -34,5 +33,6 @@ export class CreateTransactionRequestDTO {
 
   @IsNotEmpty()
   @IsString()
+  @Length(3, 5)
   cardVerificationCode: string;
 }
