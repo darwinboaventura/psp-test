@@ -9,13 +9,10 @@ import { PayableModule } from '../payable/payable.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      entities: [Transaction, Payable],
+      url: process.env.MYSQL_URL,
+      database: process.env.MYSQL_DB_NAME,
       synchronize: false,
-      host: process.env.MYSQL_URL,
-      port: Number(process.env.MYSQL_PORT),
-      username: process.env.MYSQL_USER,
-      password: process.env.MYSQL_ROOT_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
+      entities: [Transaction, Payable],
     }),
     TransactionModule,
     PayableModule,

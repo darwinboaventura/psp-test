@@ -24,6 +24,7 @@ describe('TransactionController :: E2E', () => {
     app = moduleRef.createNestApplication();
 
     await app.init();
+    await database.cleanDatabase();
   });
 
   beforeEach(async () => {
@@ -111,7 +112,7 @@ describe('TransactionController :: E2E', () => {
           .type('form')
           .send(data.transaction);
 
-        const createdTransaction: Transaction = JSON.parse(createTransactionResponse.text);
+        const createdTransaction: Transaction = createTransactionResponse.body;
 
         expect(createTransactionResponse.status).toBe(201);
         expect(createdTransaction).toMatchObject(
@@ -131,7 +132,7 @@ describe('TransactionController :: E2E', () => {
         };
 
         const getPayableResponse = await request(app.getHttpServer()).get(`/payable/${createdTransaction.id}`);
-        const createdPayable: Payable = JSON.parse(getPayableResponse.text);
+        const createdPayable: Payable = getPayableResponse.body;
 
         expect(createdPayable.paidValue).toBe(data.payable.paidValue);
         expect(createdPayable.paidValue).toBe(data.payable.paidValue);

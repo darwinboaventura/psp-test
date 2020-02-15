@@ -15,11 +15,8 @@ services:
     networks:
       - pagarme
     environment:
-      - MYSQL_URL=psp_database
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=psp
+      - MYSQL_URL=mysql://root:root@psp_database:3306/psp
+      - MYSQL_DB_NAME=psp
 
   psp_server_test:
     image: node:10-alpine
@@ -27,12 +24,6 @@ services:
     working_dir: /usr/local/app/
     restart: on-failure
     container_name: psp_server_test
-    environment:
-      - MYSQL_URL=psp_database_test
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=psp
     volumes:
       - './:/usr/local/app/'
     ports:
@@ -41,6 +32,9 @@ services:
       - psp_database_test
     networks:
       - pagarme
+    environment:
+      - MYSQL_URL=mysql://root:root@psp_database_test:3306/psp
+      - MYSQL_DB_NAME=psp
 
   psp_database:
     container_name: 'psp_database'
