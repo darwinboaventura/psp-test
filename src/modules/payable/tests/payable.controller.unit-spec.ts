@@ -1,5 +1,6 @@
 import { PayableController } from '../payable.controller';
 import { PayableService } from '../payable.service';
+import { calculateBalance } from '../utils/payable.util';
 
 describe('PayableController :: Unitary', () => {
   let payableController: PayableController;
@@ -22,7 +23,7 @@ describe('PayableController :: Unitary', () => {
           },
         ];
 
-        expect(payableController.calculateBalance(inputData)).toBe(220);
+        expect(calculateBalance(inputData)).toBe(220);
       });
     });
 
@@ -30,7 +31,7 @@ describe('PayableController :: Unitary', () => {
       it('should return zero', () => {
         const inputData = [];
 
-        expect(payableController.calculateBalance(inputData)).toBe(0);
+        expect(calculateBalance(inputData)).toBe(0);
       });
     });
   });

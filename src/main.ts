@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,14 +10,16 @@ async function bootstrap() {
     .setTitle('PSP')
     .setDescription('PSP API - Test')
     .setVersion('1.0')
-    .addTag('default')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('docs', app, document);
 
-  await app.listen(9020);
+  await app.listen(process.env.APP_PORT);
+
+  Logger.log(`Server : ${process.env.APP_URL}:${process.env.APP_PORT}`);
+  Logger.log(`Docs   : http://${process.env.APP_URL}:${process.env.APP_PORT}/docs`);
 }
 
 bootstrap();

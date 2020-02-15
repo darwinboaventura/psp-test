@@ -1,11 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('transaction')
 export class Transaction extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
+  @ApiProperty() // Gambi to solve @nestjs/swagger plugin bug
   id: number;
 
   @Column({

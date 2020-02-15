@@ -1,9 +1,11 @@
-import { IsString, IsNotEmpty, IsEnum, MaxLength, Matches, IsNumber, Min, MinLength } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, Matches, IsNumber, Min, MinLength } from 'class-validator';
 import { TransactionPaymentMethodENUM } from '../../enum/transactionPaymentMethod.enum';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTransactionRequestDTO {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty() // Gambi to solve @nestjs/swagger plugin bug
   description: string;
 
   @IsNotEmpty()

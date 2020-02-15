@@ -2,12 +2,14 @@ import { Transform } from 'class-transformer';
 import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, Column, BaseEntity } from 'typeorm';
 import { Transaction } from '../transaction/transaction.entity';
 import * as moment from 'moment';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('payable')
 export class Payable extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
+  @ApiProperty() // Gambi to solve @nestjs/swagger plugin bug
   id: number;
 
   @OneToOne((type) => Transaction)

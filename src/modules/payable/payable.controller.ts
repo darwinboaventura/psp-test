@@ -6,22 +6,21 @@ import { GetPayableByTransactionIdRequestDTO } from './dto/request/getPayableByT
 import { Transaction } from '../transaction/transaction.entity';
 import { Payable } from './payable.entity';
 import { classToPlain } from 'class-transformer';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { calculateBalance } from './utils/payable.util';
+import { ListPayablesResponsesDTO } from './dto';
 
+@ApiTags('Payable')
 @Controller('payable')
 export class PayableController {
   constructor(private readonly service: PayableService) {}
 
-  calculateBalance(items) {
-    let sum = 0;
-
-    if (items) {
-      items = _.map(items, (item) => item.paidValue);
-      sum = _.reduce(items, (value, n) => value + n) || 0;
-    }
-
-    return sum;
-  }
-
+  @ApiOperation({ summary: 'Search/list all payables' })
+  @ApiResponse({
+    status: 200,
+    description: 'The payables found',
+    type: ListPayablesResponsesDTO,
+  })
   @Get()
   async listPayables() {
     const payables = await this.service.findPayables();
@@ -32,11 +31,11 @@ export class PayableController {
 
       return {
         available: {
-          balance: this.calculateBalance(available),
+          balance: calculateBalance(available),
           items: available,
         },
         waiting_funds: {
-          balance: this.calculateBalance(waitingFunds),
+          balance: calculateBalance(waitingFunds),
           items: waitingFunds,
         },
       };
@@ -45,6 +44,12 @@ export class PayableController {
     return { available: [], waiting_funds: [] };
   }
 
+  @ApiOperation({ summary: 'Get payable by transaction id' })
+  @ApiResponse({
+    status: 200,
+    description: 'The payable found',
+    type: Payable,
+  })
   @Get('/:transactionId')
   async getPayableByTransactionId(@Param() params: GetPayableByTransactionIdRequestDTO) {
     const payable = new Payable();

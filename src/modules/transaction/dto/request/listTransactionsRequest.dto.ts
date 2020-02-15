@@ -1,9 +1,11 @@
 import { IsOptional, IsString, IsEnum, Matches, IsNumber, Min } from 'class-validator';
 import { TransactionPaymentMethodENUM } from '../../enum/transactionPaymentMethod.enum';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ListTransactionsRequestDTO {
   @IsOptional()
   @IsString()
+  @ApiProperty() // Gambi to solve @nestjs/swagger plugin bug
   description?: string;
 
   @IsOptional()
