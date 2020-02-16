@@ -24,6 +24,7 @@ describe('PayableController :: E2E', () => {
     app = moduleRef.createNestApplication();
 
     await app.init();
+    await database.cleanDatabase();
   });
 
   beforeEach(async () => {
