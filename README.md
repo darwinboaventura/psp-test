@@ -18,6 +18,14 @@
 - Run `yarn`
 - Run `docker-compose up -d --force-recreate psp_server_test && docker-compose logs -f psp_server_test`
 
+## Stack
+
+- NestJS
+- MySQL
+- TypeORM
+- Docker
+- Typescript
+
 ## Ports
 
 | Service               | Port   | Host                       | Status |
